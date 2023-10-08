@@ -1,6 +1,5 @@
 //200188J
 //A.W.S.M.GUNARATHNE.
-
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -39,7 +38,7 @@ class officeNpersonal_friends extends Recipients implements Wishable
         name = name_type[1];
         if (type.equals("Personal:"))
             email = details[2];
-        else if(type.equals("Office_friend:"))
+        else if(type.equals("Office_friends:"))
             email=details[1];
 
         this.birthday = details[3];
@@ -130,7 +129,7 @@ class RecipientsFactory       //factory method
                 Email_Recipient_Obj.add(official_recipients);
                 break;
 
-            case "Office_friend:":
+            case "Office_friends:":
                 Office_friends office_friends = new Office_friends(str);
                 Email_Recipient_Obj.add(office_friends);
                 Wishable.wishable.add(office_friends);
@@ -323,7 +322,6 @@ class BirthdayWishes
     {
         String date = DateFormatter.Date_Formatter();
         List<Recipients> BD_List = Wishable.wishable;
-
         for (int i = 0; i< BD_List.size();i++)
         {
             if (BD_List.get(i).type.equals("Personal:"))
@@ -339,10 +337,10 @@ class BirthdayWishes
                     }
                 }
             }
-            else if(BD_List.get(i).type.equals("Office_friends"))
+            else if(BD_List.get(i).type.equals("Office_friends:"))
             {
                 Office_friends office_friends = (Office_friends) BD_List.get(i);
-                if (office_friends.checkdate(date.toString()))
+                if (office_friends.checkdate(date))
                 {
                     SendEmail send_email = new SendEmail();
                     if (sent_wishes(office_friends.email, "Birthday wish!!", date))
@@ -496,7 +494,7 @@ public class Main
 
                     Scanner scanner1 = new Scanner(System.in);
                     System.out.println("Enter recipient in the format\n" +"Official: <name>, <email>,<designation>\n" +
-                            "Office_friend: <name>,<email>,<designation>,<birthday>\n" +
+                            "Office_friends: <name>,<email>,<designation>,<birthday>\n" +
                             "Personal: <name>,<nick name>,<email>,<birthday>");
 
                     //writing the input to the file
@@ -537,7 +535,6 @@ public class Main
                 case 3:
                     Scanner scanner3 = new Scanner(System.in);
                     System.out.println("Enter date");          // input format - yyyy/MM/dd (ex: 2018/09/17)
-
                     // code to print recipients who have birthdays on the given date
                     int j =0;
                     while (true)
